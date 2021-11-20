@@ -2,6 +2,7 @@
 
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 use Barryvdh\Debugbar\Facade as DebugBar;
 /*
 |--------------------------------------------------------------------------
@@ -18,4 +19,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/debugbar', function (Request $request) {
+    $request_path = $request->path();
 
+    DebugBar::info($request_path);
+    DebugBar::error('Error!');
+    DebugBar::warning('Warning Watch out ... !');
+    DebugBar::addMessage('Another message from addMessage()', 'my_label');
+
+    Debugbar::startMeasure('render', 'Time for rendering');
+    Debugbar::stopMeasure('render');
+    Debugbar::addMeasure('now', LARAVEL_START, microtime(true));
+    Debugbar::measure('My long operation', function () {
+        // Do something…
+    });
+
+    return view('debugbar.index');
+});
