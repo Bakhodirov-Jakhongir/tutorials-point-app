@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\TestMiddlewareController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Barryvdh\Debugbar\Facade as DebugBar;
@@ -36,3 +36,7 @@ Route::get('/debugbar', function (Request $request) {
 
     return view('debugbar.index');
 });
+
+
+//Middleware Laravel
+Route::get('/middleware/terminate', [TestMiddlewareController::class, 'index'])->middleware('age');
