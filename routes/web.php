@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CookieController;
 use App\Http\Controllers\TestMiddlewareController;
 use App\Http\Controllers\UriController;
 use Illuminate\Support\Facades\Route;
@@ -45,3 +46,8 @@ Route::get('/middleware/terminate', [TestMiddlewareController::class, 'index'])-
 //Request object
 
 Route::get('/foo/bar', [UriController::class, 'get_request_obj']);
+
+//Cooikes in laravel
+
+Route::get('/cookie/set', [CookieController::class, 'setCookie']);
+Route::get('/cookie/get', [CookieController::class, 'getCookie']);
