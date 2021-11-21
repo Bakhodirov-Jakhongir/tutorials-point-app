@@ -49,5 +49,38 @@ Route::get('/foo/bar', [UriController::class, 'get_request_obj']);
 
 //Cooikes in laravel
 
-Route::get('/cookie/set', [CookieController::class, 'setCookie']);
-Route::get('/cookie/get', [CookieController::class, 'getCookie']);
+// Route::get('/cookie/set', [CookieController::class, 'setCookie']);
+// Route::get('/cookie/get', [CookieController::class, 'getCookie']);
+
+
+//Response object
+Route::get('/response/header', function () {
+    $person = [
+        'name' => 'Alice',
+        'age' => 20
+    ];
+
+    $json_data_person = '{
+        "name": "Alice",
+        "age": 20
+      }';
+
+    $json_data = json_encode($person);
+
+    $decode_json_to_php_object = json_decode($json_data_person);
+
+    return response($json_data, 200)->header('Content-Type', 'application/json');
+});
+
+Route::get('/cookie/set', function () {
+    return response("Set Cookie via using response", 200)->header('Content-Type', 'text/html')
+        ->withcookie('name', 'Jakhongir Bakhodirov', 5);
+});
+
+
+Route::get('/cookie/get', function (Request $request) {
+    $cookie = $request->cookie('name');
+    return response()->json([
+        'cookie' => $cookie
+    ]);
+});
